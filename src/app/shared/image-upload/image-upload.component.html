@@ -1,0 +1,19 @@
+<div fxLayout="row wrap" [style.minHeight.px]="132">
+    @for (file of files; track $index) {
+        <div class="w-100"> 
+            <img [src]="file.content" alt="image" class="d-block w-100 mat-elevation-z2">
+        </div> 
+    }
+    @if (!files.length) {
+        <img src="images/others/noimage.png" class="d-block w-100 mat-elevation-z2">
+    }
+ 
+</div>
+<div class="file-upload mb-2">
+    @if (files.length) {
+        <button mat-raised-button color="warn" class="uppercase w-100" type="button" (click)="deleteFile()">{{ 'BTN.REMOVE' | translate }}</button>
+    } @else {
+        <input id="singleFileUploader" type="file" [accept]="acceptTypes" (change)="fileChange(input)" #input/> 
+        <button mat-raised-button color="primary" class="uppercase w-100" type="button" (click)="fileUploadClick()">{{ 'BTN.UPLOAD' | translate }}</button>
+    }   
+</div> 

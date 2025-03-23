@@ -1,0 +1,5 @@
+$custom-primary: mat.m2-define-palette(mat.$m2-teal-palette, 700, 50, 800);
+$custom-accent: mat.m2-define-palette(mat.$m2-deep-orange-palette, 600, A400, 900);
+$custom-warn: mat.m2-define-palette(mat.$m2-red-palette, 600);
+
+$custom-theme: create-custom-theme($custom-primary, $custom-accent, $custom-warn);

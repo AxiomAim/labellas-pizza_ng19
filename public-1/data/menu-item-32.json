@@ -1,0 +1,19 @@
+{
+    "id": 32,
+    "name": "Cap of Tea", 
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "price": 2.30,
+    "image": {
+        "small": "images/foods/drinks/3/small.jpg",
+        "medium": "images/foods/drinks/3/medium.jpg",
+        "big": "images/foods/drinks/3/big.jpg"
+    },
+    "discount": 0,
+    "ratingsCount": 4,
+    "ratingsValue": 480, 
+    "availibilityCount": 5,
+    "cartCount": 0,
+    "weight": 150,
+    "isVegetarian": false,
+    "categoryId": 8
+}

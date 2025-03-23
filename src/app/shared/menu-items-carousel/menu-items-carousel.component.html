@@ -1,0 +1,15 @@
+@if (menuItems.length) {
+    <div class="menu-items-carousel">   
+        <div class="swiper-container h-100 carousel-outer" [swiper]="config"> 
+            <div class="swiper-wrapper h-100">
+                @for (menuItem of menuItems; track $index) {
+                    <div class="swiper-slide">
+                        <app-menu-item [menuItem]="menuItem" [lazyLoad]="true"></app-menu-item>                 
+                    </div>
+                }
+            </div>                      
+            <button mat-mini-fab color="primary" class="prop-prev swiper-button-prev swipe-arrow"><mat-icon>keyboard_arrow_left</mat-icon></button>
+            <button mat-mini-fab color="primary" class="prop-next swiper-button-next swipe-arrow"><mat-icon>keyboard_arrow_right</mat-icon></button> 
+        </div>
+    </div>
+}

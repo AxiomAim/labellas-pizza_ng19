@@ -1,0 +1,10 @@
+<div fxLayout="row">
+    @if (showFullscreenIcon) {
+    <button mat-icon-button type="button" (click)="toggleFullScreen()" class="color-inherit">
+        <mat-icon>{{(isFullScreen)? 'fullscreen_exit' : 'fullscreen'}}</mat-icon>
+    </button>
+    }
+    <button mat-icon-button type="button" (click)="close()" class="color-inherit">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>

@@ -1,0 +1,30 @@
+<div class="hoverable-image">
+    @if (onlyImage) {
+        <a [routerLink]="['/menu', menuItem.id]">
+            <img [src]="menuItem.image.medium" [alt]="menuItem.name"> 
+        </a>
+    } @else {
+        <h1 class="title"><a [routerLink]="['/menu', menuItem.id]">{{menuItem.name}}</a></h1>   
+        <img [src]="menuItem.image.medium" [alt]="menuItem.name">        
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="bottom-section">
+            @if (menuItem.discount) {
+                <h2>  
+                    <span class="old-price">{{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}</span> 
+                    <span class="mx-2">{{ (menuItem.price - (menuItem.price * (menuItem.discount / 100))) | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+                </h2>  
+            } @else {
+                <h2> 
+                    {{menuItem.price | currency : 'USD' : 'symbol' : '1.2-2'}}  
+                </h2> 
+            }
+            <div>  
+                <button mat-icon-button [disabled]="onFavorites()" (click)="addToFavorites()" matTooltip="Add To Favorite">
+                    <mat-icon>favorite_border</mat-icon>
+                </button>
+                <button mat-icon-button [disabled]="onCart()" (click)="addToCart()" matTooltip="Add To Cart">
+                    <mat-icon>shopping_cart</mat-icon>
+                </button>  
+            </div> 
+        </div> 
+    }    
+</div> 
