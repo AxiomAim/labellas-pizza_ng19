@@ -565,7 +565,7 @@ export class AppService {
         desc: 'Phasellus sed metus leo. Donec laoreet, lacus ut suscipit convallis, erat enim eleifend nulla, at sagittis enim urna et lacus.',
         organization: 'Restaurant',
         email: 'andy.w@labellas-pizza.com',
-        phone: '(212) 457-2308',
+        phone: '(770) 973-0062',
         social: {
           facebook: 'andy.warhol',
           twitter: 'andy.warhol',

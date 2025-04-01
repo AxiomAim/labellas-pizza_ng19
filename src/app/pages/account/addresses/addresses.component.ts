@@ -32,7 +32,7 @@ export class AddressesComponent implements OnInit {
     'middleName': '',
     'company': '',
     'email': 'emilio.verdines@gmail.com',
-    'phone': '(+100) 123 456 7890',
+    'phone': '(+1) 770 973 0052',
     'country': 'US',
     'city': 'New York',
     'place': 'Brooklyn',

@@ -86,7 +86,7 @@ export class UsersData implements InMemoryDbService {
             },
             contacts:{
                 email: "andy@adecco.com",
-                phone: "(212) 457-2308",
+                phone: "(770) 973-0062",
                 address: "New York"
             },
             social: {
