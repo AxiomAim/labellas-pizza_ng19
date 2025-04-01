@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,9 +9,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router, RouterLink } from '@angular/router';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { Settings, SettingsService } from '@services/settings.service';
+import { FirebaseAuthV2Service } from '../../auth-firebase/firebase-auth-v2.service';
+import { User } from '@services/data-service/user.model';
 
 @Component({
     selector: 'app-login',
+    templateUrl: './login.component.html',
     imports: [
         MatCardModule,
         ReactiveFormsModule,
@@ -22,13 +25,20 @@ import { Settings, SettingsService } from '@services/settings.service';
         RouterLink,
         MatSlideToggleModule
     ],
-    templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-  public loginForm!: FormGroup;
+  private _firebaseAuthV2Service = inject(FirebaseAuthV2Service);
+  @ViewChild('signInNgForm') signInNgForm: NgForm;
+
+  public signInForm!: FormGroup;
   public hide = true;
   public bgImage: any;
   public settings: Settings;
+  public loginUser: User;
+  showAlert: boolean = false;
+
+  public domain = new FormControl('');
+  public isDomainControl: boolean = true;
 
   constructor(public fb: FormBuilder, public router: Router, private sanitizer: DomSanitizer, public settingsService: SettingsService) {
     this.settings = this.settingsService.settings;
@@ -36,7 +46,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.bgImage = this.sanitizer.bypassSecurityTrustStyle('url(images/others/login.jpg)');
-    this.loginForm = this.fb.group({
+    this.signInForm = this.fb.group({
       username: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
       password: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
       rememberMe: false
@@ -44,10 +54,93 @@ export class LoginComponent implements OnInit {
   }
 
   public onLoginFormSubmit(): void {
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value)
+    if (this.signInForm.valid) {
+      console.log(this.signInForm.value)
       this.router.navigate(['/']);
     }
   }
+
+    checkDomain() {
+      this.showAlert = false;
+      const orgDomain = this._firebaseAuthV2Service.getDomainFromEmail(this.signInForm.controls.email.value);
+      this._firebaseAuthV2Service.checkDomain(orgDomain).subscribe(  
+      {
+          next: 
+          (res: any) => {
+              if(res) {
+                  this.domain.setValue(this.domain.value);
+              }
+          },
+          error: (err) => {
+              console.log("err", err);
+
+              // Show the alert
+              this.showAlert = true;
+          },
+
+      });
+  }
+
+  signIn(): void {
+    // Return if the form is invalid
+    if (this.signInForm.invalid) {
+        return;
+    }
+
+    // Disable the form
+    this.signInForm.disable();
+
+    // Hide the alert
+    this.showAlert = false;
+
+    //Sign in
+    this._firebaseAuthV2Service.signIn(this.signInForm.value).subscribe(
+        {
+                next: (data: any) => {
+                this.loginUser = data;
+            },
+            error: (error) => { 
+                // Re-enable the form
+                this.signInForm.enable();    
+                // Reset the form
+                this.signInNgForm.resetForm();    
+                // Set the alert
+            }
+        }           
+    );
+    //     data => {
+    //     this.loginUser = data;
+    //     this.localSignIn();    
+    // })
+}
+
+
+googleSignInPopup(): void {
+  // Hide the alert
+  this.showAlert = false;         
+  // Google Sign in
+  this._firebaseAuthV2Service.signInGooglePopup()
+    .then((thisloginUser: any) => {
+
+      if(thisloginUser) {
+          this.loginUser = thisloginUser;
+      }
+    })
+}
+
+googleSignInRedirect(): void {
+  // Hide the alert
+  this.showAlert = false;         
+  // Google Sign in
+  this._firebaseAuthV2Service.signInGoogleRedirect()
+    .then((thisloginUser: any) => {
+      console.log('thisloginUser', thisloginUser);
+
+      if(thisloginUser) {
+          this.loginUser = thisloginUser;
+      }
+    })
+}
+
 
 }

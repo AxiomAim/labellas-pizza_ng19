@@ -14,8 +14,8 @@ import {
     setDoc,
     WhereFilterOp,
  } from '@angular/fire/firestore';
+import { BaseDatabaseModel } from '../models/base-dto.model';
 import { getDocs, writeBatch } from 'firebase/firestore';
-import { BaseDatabaseModel } from '@services/data-service/base-dto.model';
 
 
 @Injectable(

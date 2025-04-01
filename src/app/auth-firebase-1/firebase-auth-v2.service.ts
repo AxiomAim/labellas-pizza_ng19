@@ -1,8 +1,8 @@
 import { createInjectable } from 'ngxtension/create-injectable';
 import { EncryptStorage } from 'encrypt-storage';
 import { signal, computed, inject, effect } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { map, Observable, of, switchMap, tap } from 'rxjs';
+import { environment } from 'environments/environment';
+import { catchError, fromEventPattern, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
@@ -18,12 +18,13 @@ import {
   getRedirectResult
 } from "firebase/auth";
 import { initializeApp } from 'firebase/app';
+import { UsersDataService } from 'app/modules/davesa/administration/users/users-data.service';
+import { User, UserModel } from 'app/modules/davesa/administration/users/user.model';
 import { signInWithPopup, signInWithRedirect } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { UsersDataService } from '@services/data-service/users-data.service';
-import { OrganizationsDataService } from '@services/data-service/organizations-data.service';
-import { User, UserModel } from '@services/data-service/user.model';
-import { Organization } from '@services/data-service/organization.model';
+import { Organization } from 'app/modules/davesa/administration/organizations/organizations.model';
+import { OrganizationsDataService } from 'app/modules/davesa/administration/organizations/organizations-data.service';
+import { DavesaConfigService, Scheme, Theme } from '@davesa/services/config';
 // import { OrganizationsV2Service } from 'app/modules/davesa/administration/organizations/organizationsV2.service';
 
 export const encryptStorage = new EncryptStorage(environment.LOCAL_STORAGE_KEY, {
@@ -42,6 +43,7 @@ export const FirebaseAuthV2Service = createInjectable(() => {
   const auth: Auth = getAuth(app);
   const _usersDataService = inject(UsersDataService);
   const _organizationsDataService = inject(OrganizationsDataService);
+  const _davesaConfigService = inject(DavesaConfigService);
 
   // const _organizationsV2Service = inject(OrganizationsV2Service);
   const loginUser = signal<User | null>(null);
@@ -81,6 +83,8 @@ export const FirebaseAuthV2Service = createInjectable(() => {
     loading.set(true);
     error.set(null);  
     loginUser.set(data)
+    setScheme();
+    setTheme();
     setToStorage()
     loading.set(false);
   }
@@ -95,7 +99,7 @@ export const FirebaseAuthV2Service = createInjectable(() => {
       authUser.set(jsonAuthUser)
       const jsonOrganization = encryptStorage.getItem(ORGANIZATION);
       organization.set(jsonOrganization)
-    } catch(err: any) {
+    } catch(err) {
       error.set(err)
     }
     loading.set(false);
@@ -109,7 +113,7 @@ export const FirebaseAuthV2Service = createInjectable(() => {
       encryptStorage.setItem(LOGIN_USER, JSON.stringify(loginUser()));
       encryptStorage.setItem(AUTH_LOGIN_USER, JSON.stringify(authUser()));
       encryptStorage.setItem(ORGANIZATION, JSON.stringify(organization()));
-    } catch(err: any) {
+    } catch(err) {
       error.set(err)
       console.error('Error setting user to storage:', err);
     }
@@ -124,7 +128,7 @@ export const FirebaseAuthV2Service = createInjectable(() => {
       encryptStorage.removeItem(LOGIN_USER);
       encryptStorage.removeItem(AUTH_LOGIN_USER);
       encryptStorage.removeItem(ORGANIZATION);
-    } catch(err: any) {
+    } catch(err) {
       error.set(err)
       console.error('Error removing Login User from storage:', err);
     }
@@ -134,10 +138,10 @@ export const FirebaseAuthV2Service = createInjectable(() => {
 
   const check = (): Observable<boolean> => {
     return new Observable((observer) => { // eslint-disable-line @typescript-eslint/no-unused-vars
-      auth.onAuthStateChanged((checkAuthUser) => {
-        if (checkAuthUser) {
+      auth.onAuthStateChanged(checkAuthUser => {
+        if(checkAuthUser) {
           authUser.set(checkAuthUser);
-          if (loginUser() === null) { 
+          if(loginUser() === null) { 
             _usersDataService.getItem(checkAuthUser.uid).pipe(switchMap((thisUser: User) => {
               loginUser.set(thisUser);
               const domain = getDomainFromEmail(thisUser.email);
@@ -146,29 +150,32 @@ export const FirebaseAuthV2Service = createInjectable(() => {
                 setToStorage();
                 observer.next(true);
                 observer.complete();
+                return of(true);  
               }));
-            })).subscribe({
-              error: (err) => {
-                observer.error(err);
-              }
-            });          
+            })).subscribe();          
           } else {
             observer.next(true);
             observer.complete();
+            return of(true);
           }
+
         } else {
-          signOut().subscribe({
-            next: () => {
-              observer.next(false);
-              observer.complete();
-            },
-            error: (error) => {
-              observer.error(error);
-            },
-          });
-        }
+          signOut().subscribe( 
+            {
+              next: (result) => {
+                return of(false);
+              },
+              error: (error) => {
+                return of(false);
+              },
+            }
+          );
+          observer.next(false);
+          return of(false);
+
+      }
       }, err => {
-        observer.error(err);
+         observer.error(err);
       });
     });
   }  
@@ -207,6 +214,8 @@ export const FirebaseAuthV2Service = createInjectable(() => {
         return _usersDataService.updateItem(thisUser).pipe(switchMap(updateUser => {
           updateUser.status = 'online';
           loginUser.set(updateUser);
+          setScheme();
+          setTheme();      
           setToStorage()
           return _organizationsDataService.getItem(domain).pipe(map(thisOrganization => {
             organization.set(thisOrganization);
@@ -261,6 +270,8 @@ export const FirebaseAuthV2Service = createInjectable(() => {
         auth.signOut().then(() => {
           authUser.set(null)
           loginUser.set(null)
+          setScheme();
+          setTheme();      
           removeFromStorage();
           observer.next(true)
           return true;
@@ -291,8 +302,7 @@ export const FirebaseAuthV2Service = createInjectable(() => {
       const password = passwordObject.password; 
       return password === decodedData;
     } catch (error: any) {
-      console.error('Error during reauthentication:', error);
-      return false; // Ensure a boolean value is returned in the catch block
+      // ... error handling ...
     }
   };
 
@@ -304,44 +314,33 @@ export const FirebaseAuthV2Service = createInjectable(() => {
     if (result) {
       // This gives you a Google Access Token.
       // const token = credential.accessToken;
-      return new Promise((resolve, reject) => {
-        _usersDataService.getQuery('email', '==', result.user.email).subscribe({
-          next: (thisUser) => {
-            if (thisUser.length > 0) {
-              loginUser.set(thisUser[0]);
-              setToStorage();
-              loading.set(false);
-              resolve(loginUser());
-            } else {
-              const newUser = UserModel.emptyDto();
-              newUser.id = result.user.uid;
-              newUser.firstName = result.user.displayName;
-              newUser.lastName = result.user.displayName;
-              newUser.displayName = result.user.displayName;
-              newUser.emailSignature = result.user.displayName + ' ' + result.user.email;
-              _usersDataService.createItem(newUser).subscribe({
-                next: (createdUser) => {
-                  loginUser.set(createdUser);
-                  setToStorage();
-                  loading.set(false);
-                  resolve(loginUser());
-                },
-                error: (err) => {
-                  loading.set(false);
-                  reject(err);
-                },
-              });
-            }
-          },
-          error: (err) => {
-            loading.set(false);
-            reject(err);
-          },
-        });
-      });
-    }
-    return null; // Return null if no result is available
-  };
+    return _usersDataService.getQuery('email', '==', result.user.email).subscribe((thisUser) => {
+      if (thisUser.length > 0) {
+        loginUser.set(thisUser[0]);
+        setScheme();
+        setTheme();    
+        setToStorage();
+        loading.set(false);
+        return loginUser();
+      } else {
+        const newUser = UserModel.emptyDto()
+        newUser.id = result.user.uid;
+        newUser.firstName = result.user.displayName;
+        newUser.lastName = result.user.displayName;
+        newUser.displayName = result.user.displayName;
+        newUser.emailSignature = result.user.displayName + ' ' + result.user.email;
+        _usersDataService.createItem(newUser).subscribe(thisUser => {          
+          loginUser.set(thisUser);
+          setScheme();
+          setTheme();      
+          setToStorage();
+          loading.set(false);
+          return loginUser();
+        })
+      }
+    })
+  }
+  }
 
   const signInGooglePopup = async () => {
     googleProvider.addScope('profile');
@@ -353,61 +352,77 @@ export const FirebaseAuthV2Service = createInjectable(() => {
     loginUserId.set(result.user.uid)
     const credential = GoogleAuthProvider.credentialFromResult(result);
     token.set(credential.accessToken)
-    return new Observable((observer) => {
-      _usersDataService.getQuery('email', '==', result.user.email).subscribe({
-        next: (thisUser) => {
-          if (thisUser.length > 0) {
-            loginUser.set(thisUser[0]);
-            setToStorage();
-            loading.set(false);
-            observer.next(loginUser());
-            observer.complete();
-          } else {
-            const newUser = UserModel.emptyDto();
-            newUser.id = result.user.uid;
-            newUser.firstName = result.user.displayName;
-            newUser.lastName = result.user.displayName;
-            newUser.displayName = result.user.displayName;
-            newUser.emailSignature = result.user.displayName + ' ' + result.user.email;
-            _usersDataService.createItem(newUser).subscribe({
-              next: (createdUser) => {
-                loginUser.set(createdUser);
-                setToStorage();
-                loading.set(false);
-                observer.next(loginUser());
-                observer.complete();
-              },
-              error: (err) => {
-                loading.set(false);
-                observer.error(err);
-              },
-            });
-          }
-        },
-        error: (err) => {
+    return _usersDataService.getQuery('email', '==', result.user.email).subscribe((thisUser) => {
+      if (thisUser.length > 0) {
+        loginUser.set(thisUser[0]);
+        setScheme();
+        setTheme();    
+        setToStorage();
+        loading.set(false);
+        return loginUser();
+      } else {
+        const newUser = UserModel.emptyDto()
+        newUser.id = result.user.uid;
+        newUser.firstName = result.user.displayName;
+        newUser.lastName = result.user.displayName;
+        newUser.displayName = result.user.displayName;
+        newUser.emailSignature = result.user.displayName + ' ' + result.user.email;
+        _usersDataService.createItem(newUser).subscribe(thisUser => {
+          loginUser.set(thisUser);
+          setScheme();
+          setTheme();      
+          setToStorage();
           loading.set(false);
-          observer.error(err);
-        },
-      });
-    });
+          return loginUser();
+        })
+      }
+    })
   }
   
   const checkDomain = (domain: string): Observable<Organization> => {
     return _organizationsDataService.getItem(domain).pipe(tap(
       {
-        next: (res) => {
-          if (res) {
-            organization.set(res);
+        next: (org) => {
+          if(org) {
+            organization.set(org);
             setToStorage();
-            return organization;
-          } else {
-            return null; // Ensure a value is returned in all code paths
-          }
+            return org;
+          } 
         },
         error: (error) => {
           return error;
         }
       }));
+  }
+
+  const setScheme = (): void => {
+    const scheme: Scheme = loginUser().scheme;
+    if(scheme) {
+      _davesaConfigService.config = { scheme };
+    }
+    
+  }
+
+  const setTheme = (): void => {
+    const theme: Theme = loginUser().theme;
+    if(theme) {
+      _davesaConfigService.config = { theme };  
+    }
+  }
+
+  const setLayout = (layout: string): void => {
+    // Clear the 'layout' query param to allow layout changes
+    _router
+        .navigate([], {
+            queryParams: {
+                layout: null,
+            },
+            queryParamsHandling: 'merge',
+        })
+        .then(() => {
+            // Set the config
+            _davesaConfigService.config = { layout };
+        });
   }
     
   return {
@@ -429,6 +444,9 @@ export const FirebaseAuthV2Service = createInjectable(() => {
     checkDomain,
     updateStatus,
     getDomainFromEmail,
+    setScheme,
+    setTheme,
+    setLayout
   };
 });
 

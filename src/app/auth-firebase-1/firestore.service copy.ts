@@ -14,8 +14,8 @@ import {
     setDoc,
     WhereFilterOp,
  } from '@angular/fire/firestore';
+import { BaseDatabaseModel } from '../models/base-dto.model';
 import { getDocs, writeBatch } from 'firebase/firestore';
-import { BaseDatabaseModel } from '@services/data-service/base-dto.model';
 
 
 @Injectable(
@@ -42,42 +42,26 @@ export class FirestoreService {
       return collectionData<T>(qWithConverter);
     }
       
-    //   public getItem<T extends BaseDatabaseModel>(collectionPath: string, id: string): Observable<T> {
-    //     debugger
-    //     const converter = {
-    //       toFirestore: (data: T) => data,
-    //       fromFirestore: (snap: any) => snap.data() as T
-    //     };
-    //     const docRef = doc(this.firestore, `${collectionPath}/${id}`).withConverter(converter);        
-    //     return new Observable<T>(subscriber => {
-    //       getDoc(docRef).then(documentSnapshot => {
-    //         if (documentSnapshot.exists()) {
-    //           subscriber.next(documentSnapshot.data() as T);
-    //           subscriber.complete();
-    //         } else {
-    //           subscriber.error(`Document with ID ${id} not found`);
-    //         }
-    //       })
-    //       .catch(error => subscriber.error(error));
-    //     });
-    // }
+      public getItem<T extends BaseDatabaseModel>(collectionPath: string, id: string): Observable<T> {
+        const converter = {
+          toFirestore: (data: T) => data,
+          fromFirestore: (snap: any) => snap.data() as T
+        };
+        const docRef = doc(this.firestore, `${collectionPath}/${id}`).withConverter(converter);        
+        return new Observable<T>(subscriber => {
+          getDoc(docRef).then(documentSnapshot => {
+            if (documentSnapshot.exists()) {
+              subscriber.next(documentSnapshot.data() as T);
+              subscriber.complete();
+            } else {
+              subscriber.error(`Document with ID ${id} not found`);
+            }
+          })
+          .catch(error => subscriber.error(error));
+        });
+    }
 
-    public getItem<T extends BaseDatabaseModel>(collectionPath: string, id: string): Observable<T> {
-      const docRef = doc(this.firestore, `${collectionPath}/${id}`);        
-      return new Observable<T>(subscriber => {
-        getDoc(docRef).then(documentSnapshot => {
-          if (documentSnapshot.exists()) {
-            subscriber.next(documentSnapshot.data() as T);
-            subscriber.complete();
-          } else {
-            subscriber.error("Document not found");
-          }
-        })
-        .catch(error => subscriber.error(error));
-      });
-  }
-
-  public getQuery<T extends BaseDatabaseModel>(collectionPath: string, fieldName: string, operator: WhereFilterOp, value: string): Observable<T[]> {
+    public getQuery<T extends BaseDatabaseModel>(collectionPath: string, fieldName: string, operator: WhereFilterOp, value: string): Observable<T[]> {
       const colRef = collection(this.firestore, collectionPath); // Create CollectionReference
       const q = query(
           colRef, 
@@ -229,45 +213,6 @@ public deleteDuplicates<T extends BaseDatabaseModel>(collectionPath: string): Ob
       );
     }
 
-    // exportJson(documents: any) {
-      
-    //   const jsonData = JSON.stringify(documents, null, 2); // Beautify JSON (optional)
-    //   const blob = new Blob([jsonData], { type: 'application/json' });
-    
-    //   const link = document.createElement('a');
-    //       link.href = window.URL.createObjectURL(blob);
-    //       link.download = `${collectionName}.json`; // Set the filename
-    //       link.style.display = 'none'; // Hide the link
-    
-    // }
-    
-    public exportJson<T extends BaseDatabaseModel>(collectionPath: string): Observable<T[]> {
-      const colRef = collection(this.firestore, collectionPath);
-    
-      // Add a where clause to filter out documents where the 'id' field is not set
-      const q = query(colRef, where('id', '!=', null)); 
-    
-      const converter = {
-        toFirestore: (data: T) => data,
-        fromFirestore: (snap: any) => snap.data() as T
-      };
-      const qWithConverter = q.withConverter(converter);
-
-      const jsonData = JSON.stringify(qWithConverter, null, 2); // Beautify JSON (optional)
-      const blob = new Blob([jsonData], { type: 'application/json' });
-
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = `${collectionPath}.json`; // Set the filename
-      link.style.display = 'none'; // Hide the link
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link); // Clean up
-      window.URL.revokeObjectURL(link.href); // Release the Blob URL
-
-      return collectionData<T>(qWithConverter);
-    }
-
     // public bulkCreate<T extends BaseDatabaseModel>(collectionPath: string, data: T[]): Observable<T[]> {
     //   const batch = writeBatch(this.firestore);
     //   const savedData: T[] = []; 
@@ -415,40 +360,7 @@ public deleteDuplicates<T extends BaseDatabaseModel>(collectionPath: string): Ob
       // Execute all batches
       return forkJoin(batches).pipe(map(() => void 0)); 
     }
-
-    bulkDeleteAll(collectionPath: string): Observable<void> {
-      const db = this.firestore;
-      const collectionRef = collection(db, collectionPath);
-      const batchSize = 499; // Firestore limit for batch writes
-      const batches: Observable<void>[] = [];
-  
-      return from(getDocs(collectionRef)).pipe( // Use from() to convert promise to Observable
-        map((querySnapshot) => {
-          const ids: string[] = [];
-          querySnapshot.forEach((doc) => {
-            ids.push(doc.id); // Collect document IDs
-          });
-          return ids;
-        }),
-        map((ids) => { // Now we have the IDs
-          for (let i = 0; i < ids.length; i += batchSize) {
-            const batch = writeBatch(db);
-            const batchIds = ids.slice(i, i + batchSize);
-  
-            batchIds.forEach(id => {
-              const docRef = doc(db, collectionPath, id);
-              batch.delete(docRef);
-            });
-  
-            batches.push(from(batch.commit()));
-          }
-          return batches;
-        }),
-        map(batches => forkJoin(batches)), // ForkJoin the batches
-        map(() => void 0) // Return void after successful deletion
-      );
-    }
-
+    
 }
 
 export class FirestoreQuery {
