@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 
 export class Settings {
-  constructor(public name: string,
-              public theme: string,
-              public toolbar: number,
-              public stickyMenuToolbar: boolean,                
-              public header: string,
-              public rtl: boolean, 
-              public adminSidenavIsOpened: boolean,
-              public adminSidenavIsPinned: boolean,
-              public adminSidenavUserBlock: boolean,
+  constructor(
+    public name: string,
+    public theme: string,
+    public toolbar: number,
+    public stickyMenuToolbar: boolean,                
+    public header: string,
+    public rtl: boolean, 
+    public adminSidenavIsOpened: boolean,
+    public adminSidenavIsPinned: boolean,
+    public adminSidenavUserBlock: boolean,
 
-              //additional options
-              public mainToolbarFixed:boolean,
-              public contentOffsetToTop:boolean,                
-              public headerBgImage: boolean,
-              public headerBgVideo: boolean
-              ) { }
+    //additional options
+    public mainToolbarFixed:boolean,
+    public contentOffsetToTop:boolean,                
+    public headerBgImage: boolean,
+    public headerBgVideo: boolean
+    ) { }
 }
 
 @Injectable({
@@ -25,7 +26,7 @@ export class Settings {
 export class SettingsService {
   public settings = new Settings(
     'Labellas',    // theme name
-    'red',       // red, green, blue, pink, purple, grey, orange-dark, custom
+    'green',       // red, green, blue, pink, purple, grey, orange-dark, custom
     1,           // 1   
     true,        // true = sticky, false = not sticky
     'image',     // default, image, carousel

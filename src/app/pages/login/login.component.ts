@@ -9,8 +9,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router, RouterLink } from '@angular/router';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { Settings, SettingsService } from '@services/settings.service';
-import { FirebaseAuthV2Service } from '../../auth-firebase/firebase-auth-v2.service';
 import { User } from '@services/data-service/user.model';
+import { FirebaseAuthV2Service } from '../../auth-firebase/firebase-auth-v2.service';
+
 
 @Component({
     selector: 'app-login',
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
   private _firebaseAuthV2Service = inject(FirebaseAuthV2Service);
   @ViewChild('signInNgForm') signInNgForm: NgForm;
 
-  public signInForm!: FormGroup;
+  public loginForm!: FormGroup;
   public hide = true;
   public bgImage: any;
   public settings: Settings;
@@ -46,23 +47,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.bgImage = this.sanitizer.bypassSecurityTrustStyle('url(images/others/login.jpg)');
-    this.signInForm = this.fb.group({
-      username: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
+    this.loginForm = this.fb.group({
+      email: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
       password: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
       rememberMe: false
     });
   }
 
   public onLoginFormSubmit(): void {
-    if (this.signInForm.valid) {
-      console.log(this.signInForm.value)
-      this.router.navigate(['/']);
-    }
+    // if (this.signInForm.valid) {
+      this.signIn();
+    //   console.log(this.signInForm.value)
+    //   this.router.navigate(['/']);
+    // }
   }
 
     checkDomain() {
       this.showAlert = false;
-      const orgDomain = this._firebaseAuthV2Service.getDomainFromEmail(this.signInForm.controls.email.value);
+      const orgDomain = this._firebaseAuthV2Service.getDomainFromEmail(this.loginForm.controls.email.value);
       this._firebaseAuthV2Service.checkDomain(orgDomain).subscribe(  
       {
           next: 
@@ -83,25 +85,26 @@ export class LoginComponent implements OnInit {
 
   signIn(): void {
     // Return if the form is invalid
-    if (this.signInForm.invalid) {
+    if (this.loginForm.invalid) {
         return;
     }
 
     // Disable the form
-    this.signInForm.disable();
+    this.loginForm.disable();
 
     // Hide the alert
     this.showAlert = false;
 
     //Sign in
-    this._firebaseAuthV2Service.signIn(this.signInForm.value).subscribe(
+    this._firebaseAuthV2Service.signIn(this.loginForm.value).subscribe(
         {
                 next: (data: any) => {
                 this.loginUser = data;
+                this.router.navigate(['/account']);
             },
             error: (error) => { 
                 // Re-enable the form
-                this.signInForm.enable();    
+                this.loginForm.enable();    
                 // Reset the form
                 this.signInNgForm.resetForm();    
                 // Set the alert

@@ -1,0 +1,1059 @@
+// rules_version = '2';
+// service cloud.firestore {
+//   match /databases/{database}/documents {
+//     match /{document=**} {
+//       allow read, write: if false;
+//     }
+//   }
+// }
+
+// service cloud.firestore {orgorg
+// 
+//   match /databases/{database}/documents {
+//     match /{document=**} {
+//       allow read, write;
+//     }
+//   }
+// }
+rules_version = '2'
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow the user to access documents in the "cities" collection
+    // only if they are authenticated.
+    // match /users/{uid} {
+    // 	allow read, update, delete: if request.auth.uid != uid;
+    //   allow create: if request.auth.uid != null;
+    // }
+    // match /users/{uid} {
+    // 	allow read, write: if request.auth.uid == uid
+    // }
+
+    match /protocols/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /protocol-items/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /protocol-boards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /protocol-cards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /protocol-labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /protocol-lists/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /protocol-users/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /protocol-templates/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+        
+    match /aims/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /aim-items/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /aim-boards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /aim-cards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /aim-labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /aim-lists/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /aim-users/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /aim-templates/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+    match /nav-menus/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /nav-menu-items/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+     match /support-queries/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+   match /support-query-labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+    match /project-boards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /project-cards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /project-labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /project-lists/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /project-users/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+
+
+    match /csv-tests-boards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /csv-tests-cards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /csv-tests-labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /csv-tests-lists/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /csv-tests-users/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+
+    match /ticket-boards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /ticket-cards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /ticket-labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /ticket-lists/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /ticket-users/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+
+
+    match /project-boards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /project-cards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /project-labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /project-lists/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /project-users/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+
+    match /sprint-boards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /sprint-cards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /sprint-labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /sprint-lists/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /sprint-users/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+		match /guest-documents/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /shortcuts-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /notifications-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /messages-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    
+    match /csv-objects-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /csv-objects-filters-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /csv-objects-folders-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /csv-objects-labels-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+
+		match /eforms-objects/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+    match /notes/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+
+    match /labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }   
+    match /eform-forms/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /eforms/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /boards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /board-lists/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /board-cards/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /board-labels/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /user-roles/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /user-roles-prod/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /user-rols-modules/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /shortcuts/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /contacts/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /chats/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /images/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /documents-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /documents/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /items/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /cloud-storage/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /tags/{Id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /countries/{Id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /organizations/{Id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /orgs/{Id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /org-website/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /users/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /users-prod/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /users-backup/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /users-restore/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /user-roles/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;    
+    }
+    match /user-roles-prod/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;    
+    }
+        match /user-role-permissions/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;    
+    }
+    match /system-objects/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /support-tickets/{ticketId} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /support-time-log/{timeLogId} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /covid-notification/{notificationId} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /covid-survey/{surveyId} {
+      allow read;
+      allow create;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+  	match /covid-visitor-survey/{surveyId} {
+      allow read;
+      allow create;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /messages/{messageId} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /fm-study-budget/{fmId} {
+      allow read;
+      allow create;
+      allow write;
+      allow update;
+    }    
+    match /fm-study-budget-items/{fmId} {
+      allow read;
+      allow create;
+      allow write;
+      allow update;
+    }    
+    match /fm-study-bill-items/{fmId} {
+      allow read;
+      allow create;
+      allow write;
+      allow update;
+    }    
+    match /fm-study-invoices/{fmId} {
+      allow read;
+      allow create;
+      allow write;
+      allow update;
+    }    
+    match /fm-study-ledger/{id} {
+      allow read;
+      allow create;
+      allow write;
+      allow update;
+    }        
+    match /logs/{logId} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }    
+    match /sendEmail/{emailId} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /document-share-users/{userId} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /document-share/{docId} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /budget-invoices/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /budget-payments/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;      
+      allow update: if request.auth.uid != null;
+    }
+    match /projects-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /projects/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /studies/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /study-kit-inventory/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /davesa-help/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /menus/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /menu-items/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /courses-prod/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /project-build/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /courses/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /course-lessons/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /du-courses/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /du-course-lessons/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /user-course-lessons/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /subscribe/{id} {
+      allow read;
+      allow create;
+      allow write;
+      allow update;
+    }
+    match /feedback/{id} {
+      allow read;
+      allow create;
+      allow write;
+      allow update;
+    }
+    match /project-urs/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /project-teams/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /send-email/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-documents/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /timesheets/{id} {
+      allow read;
+      allow create;
+      allow write;
+      allow update;
+    }
+    match /rdr-trials/{id} {
+      allow read;
+      allow create;
+      allow write;
+      allow update;
+    }
+    match /app-menu/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /rdr-sites/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /rdr-trials/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /rdr-studies/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /esources/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /esource-data/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /esource-results/{id} {
+      allow read;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /trials/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /trial-indications/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /cvs-sop/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /cvs-sops/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /cvs-documents/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /cvs-signatures/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /cvs-requirements/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /cvs-user-requirements/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /cvs-functional-requirements/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /cvs-system-design/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /my-econsent/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-sop/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-validations-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-validations/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-validations-backup/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-validations-archive/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+		match /csv-sops-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-sops-backup/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-sops-archive/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-sops/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-protocols/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-matrix/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-documents/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-signatures/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-signatures-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /signatures-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /frs-requirements/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /urs-requirements/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-requirements/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-requirements-test/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-requirements-prod/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-user-requirements/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-functional-requirements/{id} {
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-system-design/{id} {
+      allow csv: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+    match /csv-system/{id} {
+      allow csv: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+    }
+
+	match /{document=**} {
+      allow read, write: if request.auth.uid != null;
+    }
+  }
+}
+
+

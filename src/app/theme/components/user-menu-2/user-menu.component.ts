@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,9 +7,8 @@ import { RouterLink } from '@angular/router';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppService } from '@services/app.service';
-import { Settings, SettingsService } from '@services/settings.service';
 import { User } from '@services/data-service/user.model';
-import { NgIf } from '@angular/common';
+import { Settings, SettingsService } from '@services/settings.service';
 
 @Component({
     selector: 'app-user-menu',
@@ -20,18 +19,14 @@ import { NgIf } from '@angular/common';
         MatBadgeModule,
         FlexLayoutModule,
         TranslateModule,
-        RouterLink,
-        NgIf
+        RouterLink
     ],
     templateUrl: './user-menu.component.html'
 })
-export class UserMenuComponent{
+export class UserMenuComponent {
   @Input() loginUser: User;
-
   public settings: Settings;
   constructor(public appService: AppService, public settingsService: SettingsService) {
     this.settings = this.settingsService.settings;
   }  
-
-
 }

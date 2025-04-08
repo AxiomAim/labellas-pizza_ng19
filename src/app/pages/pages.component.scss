@@ -59,18 +59,18 @@
             }
 
             &.red {
-                background-color: #C62828;
-                border: 1px solid #C62828;
+                background-color: #c62828;
+                border: 1px solid #c62828;
             }
 
             &.blue {
-                background-color: #1565C0;
-                border: 1px solid #1565C0;
+                background-color: #1565c0;
+                border: 1px solid #1565c0;
             }
 
             &.green {
-                background-color: #558B2F;
-                border: 1px solid #558B2F;
+                background-color: #558b2f;
+                border: 1px solid #558b2f;
             }
 
             &.pink {
@@ -88,6 +88,14 @@
                 border: 1px solid #455a64;
             }
 
+            &.green-dark {
+                background-color: #558b2f;
+                border: 1px solid #558b2f;
+
+                .skin-secondary {
+                    border-bottom-color: #303030;
+                }
+            }
             &.orange-dark {
                 background-color: #e64a19;
                 border: 1px solid #e64a19;
@@ -131,7 +139,7 @@
     right: 0;
     width: 40px;
     height: 40px;
-    background: rgba(0, 0, 0, .7);
+    background: rgba(0, 0, 0, 0.7);
     color: #fff;
     cursor: pointer;
     z-index: 99999;
@@ -169,9 +177,9 @@
     z-index: 999999;
     right: 20px;
     bottom: 20px;
-    opacity: .5;
+    opacity: 0.5;
     color: #fff;
-    background-color: rgba(0, 0, 0, .75);
+    background-color: rgba(0, 0, 0, 0.75);
     border-radius: 50%;
     transition: 0.3s;
 

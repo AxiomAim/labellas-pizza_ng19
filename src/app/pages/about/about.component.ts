@@ -4,10 +4,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { Settings, SettingsService } from '@services/settings.service';
-import { GetAppComponent } from '@shared/get-app/get-app.component';
 import { HeaderImageComponent } from '@shared/header-image/header-image.component';
-import { OurAwardsComponent } from '@shared/our-awards/our-awards.component';
-import { OurServicesComponent } from '@shared/our-services/our-services.component';
 
 @Component({
     selector: 'app-about',
@@ -17,9 +14,6 @@ import { OurServicesComponent } from '@shared/our-services/our-services.componen
         FlexLayoutModule,
         MatChipsModule,
         MatIconModule,
-        OurServicesComponent,
-        OurAwardsComponent,
-        GetAppComponent
     ],
     templateUrl: './about.component.html'
 })

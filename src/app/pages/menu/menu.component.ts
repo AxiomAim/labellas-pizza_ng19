@@ -17,8 +17,6 @@ import { MenuItemsToolbarComponent } from '@shared/menu-items-toolbar/menu-items
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { filter, map, Subscription } from 'rxjs';
 import { MatChipsModule } from '@angular/material/chips';
-import { OurAwardsComponent } from '@shared/our-awards/our-awards.component';
-import { GetInTouchComponent } from '@shared/get-in-touch/get-in-touch.component';
 
 @Component({
     selector: 'app-menu',
@@ -36,8 +34,6 @@ import { GetInTouchComponent } from '@shared/get-in-touch/get-in-touch.component
         MatProgressSpinnerModule,
         MatChipsModule,
         MatPaginatorModule,
-        OurAwardsComponent,
-        GetInTouchComponent
     ],
     templateUrl: './menu.component.html'
 })

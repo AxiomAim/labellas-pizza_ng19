@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { AppService } from '@services/app.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -16,6 +16,7 @@ import { ContactsComponent } from '../contacts/contacts.component';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { RouterLink } from '@angular/router';
+import { User } from '@services/data-service/user.model';
 
 @Component({
     selector: 'app-toolbar1',
@@ -27,9 +28,9 @@ import { RouterLink } from '@angular/router';
         TranslateModule,
         MatIconModule,
         HorizontalMenuComponent,
-        UserMenuComponent,
+        // UserMenuComponent,
         LogoComponent,
-        LangComponent,
+        // LangComponent,
         SocialIconsComponent,
         ContactsComponent,
         FlexLayoutModule,
@@ -38,6 +39,7 @@ import { RouterLink } from '@angular/router';
     templateUrl: './toolbar1.component.html'
 })
 export class Toolbar1Component {
+  @Input() loginUser: User;
   @Output() onMenuIconClick: EventEmitter<any> = new EventEmitter<any>();
   constructor(public appService: AppService) { }
 

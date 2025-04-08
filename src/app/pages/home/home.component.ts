@@ -6,18 +6,10 @@ import { MenuItem } from '@models/app.models';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { AppService } from '@services/app.service';
 import { Settings, SettingsService } from '@services/settings.service';
-import { GetAppComponent } from '@shared/get-app/get-app.component';
-import { GetInTouchComponent } from '@shared/get-in-touch/get-in-touch.component';
 import { HeaderCarouselComponent } from '@shared/header-carousel/header-carousel.component';
 import { HeaderImageComponent } from '@shared/header-image/header-image.component';
 import { HeaderVideoComponent } from '@shared/header-video/header-video.component';
 import { MenuItemsCarouselComponent } from '@shared/menu-items-carousel/menu-items-carousel.component';
-import { OurAwardsComponent } from '@shared/our-awards/our-awards.component';
-import { OurChefsComponent } from '@shared/our-chefs/our-chefs.component';
-import { OurServicesComponent } from '@shared/our-services/our-services.component';
-import { ReservationFormComponent } from '@shared/reservation-form/reservation-form.component';
-import { TestimonialsComponent } from '@shared/testimonials/testimonials.component';
-import { TimelineComponent } from '@shared/timeline/timeline.component';
 import { TodayMenuComponent } from '@shared/today-menu/today-menu.component';
 
 @Component({
@@ -30,14 +22,6 @@ import { TodayMenuComponent } from '@shared/today-menu/today-menu.component';
         MatCardModule,
         MenuItemsCarouselComponent,
         TodayMenuComponent,
-        OurServicesComponent,
-        OurChefsComponent,
-        TimelineComponent,
-        ReservationFormComponent,
-        TestimonialsComponent,
-        GetAppComponent,
-        OurAwardsComponent,
-        GetInTouchComponent,
         RouterLink,
         MatButtonModule
     ],

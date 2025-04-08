@@ -11,7 +11,6 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { MatInputModule } from '@angular/material/input';
 import { SocialIconsComponent } from '@shared/social-icons/social-icons.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { GetAppComponent } from '@shared/get-app/get-app.component';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -25,7 +24,6 @@ import { MatButtonModule } from '@angular/material/button';
         MatInputModule,
         SocialIconsComponent,
         GoogleMapsModule,
-        GetAppComponent,
         MatButtonModule
     ],
     templateUrl: './contact.component.html'

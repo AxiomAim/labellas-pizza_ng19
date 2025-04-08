@@ -46,6 +46,7 @@ export class UserModel implements BaseDto {
         web_token?: string,
         tokenDate?: string,
         status?: string,
+        settings?: Settings,
         platform?: string,
         selected?: boolean,
         login_at?: string[],
@@ -95,6 +96,7 @@ export class UserModel implements BaseDto {
             this.web_token = web_token;
             this.tokenDate = tokenDate;
             this.status = status;
+            this.settings = settings
             this.platform = platform;
             this.selected = selected;
             this.login_at = login_at;
@@ -145,6 +147,7 @@ export class UserModel implements BaseDto {
     public web_token?: string;
     public tokenDate?: string;
     public status?: string;
+    public settings?: Settings;
     public platform?: string;
     public selected?: boolean;
     public login_at?: string[];
@@ -198,6 +201,7 @@ export class UserModel implements BaseDto {
             web_token: dto.web_token ? dto.web_token : '',
             tokenDate: dto.tokenDate ? dto.tokenDate : '',
             status: dto.status ? dto.status : '',
+            settings: dto.settings ? dto.settings : null,
             platform: dto.platform ? dto.platform : '',
             selected: dto.selected ? dto.selected : false,
             login_at: dto.login_at ? dto.login_at : [],
@@ -252,6 +256,7 @@ export class UserModel implements BaseDto {
             web_token: '',
             tokenDate: '',
             status: '',
+            settings: null,
             platform: '',
             selected: false,
             login_at: [],
@@ -261,6 +266,28 @@ export class UserModel implements BaseDto {
             deleted_at: '',
 
         }
+
+    }
+
+    public static emptySettingsDto(): Settings {
+        return {
+            name: 'Labellas',
+            theme: 'red',
+            toolbar: 1,
+            stickyMenuToolbar: true,                
+            header: 'image',
+            rtl: false, 
+            adminSidenavIsOpened: true,
+            adminSidenavIsPinned: true,
+            adminSidenavUserBlock: true,
+        
+            //additional options
+            mainToolbarFixed: false,
+            contentOffsetToTop: false,                
+            headerBgImage: false,
+            headerBgVideo: false
+        }
+
     }
 }
 
@@ -306,6 +333,7 @@ export interface User  extends BaseDto {
     web_token?: string;
     tokenDate?: string;
     status?: string;
+    settings?: Settings;
     platform?: string;
     selected?: boolean;
     login_at?: string[];
@@ -335,4 +363,21 @@ export interface Country {
     flagImagePos: string;
 }
 
+export interface Settings {
+    name: string,
+    theme: string,
+    toolbar: number,
+    stickyMenuToolbar: boolean,                
+    header: string,
+    rtl: boolean, 
+    adminSidenavIsOpened: boolean,
+    adminSidenavIsPinned: boolean,
+    adminSidenavUserBlock: boolean,
+
+    //additional options
+    mainToolbarFixed:boolean,
+    contentOffsetToTop:boolean,                
+    headerBgImage: boolean,
+    headerBgVideo: boolean
+}
 

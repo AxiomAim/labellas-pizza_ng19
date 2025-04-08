@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AppService } from '@services/app.service';
 import { DomHandlerService } from '@services/dom-handler.service';
@@ -15,6 +15,7 @@ import { Toolbar1Component } from '../theme/components/toolbar1/toolbar1.compone
 import { FooterComponent } from '../theme/components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { User } from '@services/data-service/user.model';
 
 @Component({
     selector: 'app-pages',
@@ -37,18 +38,21 @@ import { MatButtonModule } from '@angular/material/button';
     styleUrl: './pages.component.scss'
 })
 export class PagesComponent implements OnInit {
+// _firebaseAuthV2Service = inject(FirebaseAuthV2Service);
   @ViewChild('sidenav') sidenav: any;
   public headerTypes = ['default', 'image', 'carousel', 'video'];
   public headerTypeOption: string = '';
   public headerFixed: boolean = false;
   public showBackToTop: boolean = false;
   public settings: Settings;
+  public loginUser: User;
 
   constructor(public settingsService: SettingsService,
               public router: Router,
               public appService: AppService,
               private domHandlerService: DomHandlerService) {
     this.settings = this.settingsService.settings;
+    // this.loginUser = this._firebaseAuthV2Service.loginUser();
   }
 
   ngOnInit() {

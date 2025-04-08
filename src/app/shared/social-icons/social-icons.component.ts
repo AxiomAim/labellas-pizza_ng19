@@ -1,10 +1,14 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-social-icons',
     imports: [
-        NgClass
+        NgClass,
+        MatToolbarModule,
+        MatButtonModule
     ],
     templateUrl: './social-icons.component.html'
 })

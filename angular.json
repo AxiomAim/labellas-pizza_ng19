@@ -60,7 +60,9 @@
               "clone-deep",
               "rfdc",
               "bezier-easing",
-              "vanilla-text-mask/dist/vanillaTextMask.js"
+              "vanilla-text-mask/dist/vanillaTextMask.js",
+              "@grpc/grpc-js",
+              "@grpc/proto-loader"
             ],
             "stylePreprocessorOptions": {
               "sass": {

@@ -14,7 +14,9 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { FirebaseAuthV2Service } from './firebase-auth-v2.service';
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
+import {LocalStorageService} from 'ngx-webstorage';
+
 
 export const firebaseProvideAuth = (): Array<Provider | EnvironmentProviders> => {
     return [
@@ -27,6 +29,11 @@ export const firebaseProvideAuth = (): Array<Provider | EnvironmentProviders> =>
         {
             provide: ENVIRONMENT_INITIALIZER,
             useValue: () => inject(FirebaseAuthV2Service),
+            multi: true,
+        },
+        {
+            provide: ENVIRONMENT_INITIALIZER,
+            useValue: () => inject(LocalStorageService),
             multi: true,
         },
     ];

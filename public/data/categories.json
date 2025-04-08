@@ -1,10 +1,24 @@
 [
-    { "id":1, "name":"Breakfast", "description": "Breakfast category description" },
-    { "id":2, "name":"Appetizers", "description": "Appetizers category description" },
-    { "id":3, "name":"Salads", "description": "Salads category description" },
-    { "id":4, "name":"Soups", "description": "Soups category description" },
-    { "id":5, "name":"Meat Courses", "description": "Meat Courses category description" },
-    { "id":6, "name":"Chicken Courses", "description": "Chicken Courses category description" }, 
-    { "id":7, "name":"Desserts", "description": "Desserts category description" },
-    { "id":8, "name":"Drinks", "description": "Drinks category description" } 
+  { "id": 1, "name": "Cold Subs", "description": "Fresh made sub sandwiches" },
+  { "id": 2, "name": "Salads", "description": "Healthy and Delicious Salads" },
+  { "id": 3, "name": "Desserts", "description": "Something Sweet" },
+  { "id": 4, "name": "Garlic Knotz", "description": "The Original Knotz" },
+  {
+    "id": 5,
+    "name": "Hot Specialty Loaves",
+    "description": "A Labella's, One of a kind"
+  },
+  { "id": 6, "name": "Dinners", "description": "Homemade Italian Entrees" },
+  { "id": 7, "name": "Pizza", "description": "Taste a slice of New York" },
+  { "id": 8, "name": "Specialty Pizza", "description": "Our special recipes" },
+  {
+    "id": 9,
+    "name": "Calzones",
+    "description": "Warm yourself with comfort food"
+  },
+  {
+    "id": 10,
+    "name": "Hot Heros",
+    "description": "Delicious Hot 'fresh made' Heros"
+  }
 ]

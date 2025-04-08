@@ -1,5 +1,5 @@
 import { createInjectable } from 'ngxtension/create-injectable';
-import { EncryptStorage } from 'encrypt-storage';
+// import { storage } from 'encrypt-storage';
 import { signal, computed, inject, effect } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { map, Observable, of, switchMap, tap } from 'rxjs';
@@ -25,10 +25,11 @@ import { OrganizationsDataService } from '@services/data-service/organizations-d
 import { User, UserModel } from '@services/data-service/user.model';
 import { Organization } from '@services/data-service/organization.model';
 // import { OrganizationsV2Service } from 'app/modules/davesa/administration/organizations/organizationsV2.service';
+import {LocalStorageService} from 'ngx-webstorage';
 
-export const encryptStorage = new EncryptStorage(environment.LOCAL_STORAGE_KEY, {
-  storageType: 'sessionStorage',
-});
+// export const storage = new storage(environment.LOCAL_STORAGE_KEY, {
+//   storageType: 'sessionStorage',
+// });
 
 const LOGIN_USER = "loginUser";
 const AUTH_LOGIN_USER = "authUser";
@@ -36,6 +37,7 @@ const ORGANIZATION = "organization";
 
 export const FirebaseAuthV2Service = createInjectable(() => {
   const _router = inject(Router);
+  const storage = inject(LocalStorageService);
   // const _authService = inject(AuthService);
 
   const app = initializeApp(environment.firebase);
@@ -89,11 +91,11 @@ export const FirebaseAuthV2Service = createInjectable(() => {
     loading.set(true);
     error.set(null);  
     try {
-      const jsonUser = encryptStorage.getItem(LOGIN_USER);
-      loginUser.set(jsonUser)
-      const jsonAuthUser = encryptStorage.getItem(AUTH_LOGIN_USER);
+      const jsonLoginUser = storage.retrieve(LOGIN_USER);
+      loginUser.set(jsonLoginUser)
+      const jsonAuthUser = storage.retrieve(AUTH_LOGIN_USER);
       authUser.set(jsonAuthUser)
-      const jsonOrganization = encryptStorage.getItem(ORGANIZATION);
+      const jsonOrganization = storage.retrieve(ORGANIZATION);
       organization.set(jsonOrganization)
     } catch(err: any) {
       error.set(err)
@@ -106,9 +108,9 @@ export const FirebaseAuthV2Service = createInjectable(() => {
     loading.set(true);
     error.set(null);  
     try {
-      encryptStorage.setItem(LOGIN_USER, JSON.stringify(loginUser()));
-      encryptStorage.setItem(AUTH_LOGIN_USER, JSON.stringify(authUser()));
-      encryptStorage.setItem(ORGANIZATION, JSON.stringify(organization()));
+      storage.store(LOGIN_USER, JSON.stringify(loginUser()));
+      storage.store(AUTH_LOGIN_USER, JSON.stringify(authUser()));
+      storage.store(ORGANIZATION, JSON.stringify(organization()));
     } catch(err: any) {
       error.set(err)
       console.error('Error setting user to storage:', err);
@@ -121,9 +123,9 @@ export const FirebaseAuthV2Service = createInjectable(() => {
     loading.set(true);
     error.set(null);  
     try {
-      encryptStorage.removeItem(LOGIN_USER);
-      encryptStorage.removeItem(AUTH_LOGIN_USER);
-      encryptStorage.removeItem(ORGANIZATION);
+      storage.clear(LOGIN_USER);
+      storage.clear(AUTH_LOGIN_USER);
+      storage.clear(ORGANIZATION);
     } catch(err: any) {
       error.set(err)
       console.error('Error removing Login User from storage:', err);
